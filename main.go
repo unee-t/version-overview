@@ -6,7 +6,6 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"regexp"
 	"strings"
 
 	"github.com/apex/log"
@@ -15,7 +14,6 @@ import (
 )
 
 var views = template.Must(template.ParseGlob("templates/*.html"))
-var commitRE = regexp.MustCompile(`<!-- COMMIT: (?P<version>\w+) -->`)
 
 type Service struct {
 	Site    string
@@ -74,14 +72,17 @@ func commitVersion(input io.Reader) (version string, err error) {
 	// <!-- COMMIT: ae5b321 -->
 	scanner := bufio.NewScanner(input)
 	for scanner.Scan() {
-		txt := scanner.Text()
-		if commitRE.MatchString(txt) {
-			// not sure howto use regex groups or if it's worth it
-			// https://regex101.com/r/57q2CW/2
-			words := strings.Split(strings.TrimSpace(txt), " ")
-			if len(words) > 3 {
-				return words[2], nil
-			}
+		html := scanner.Text()
+		commitString := "<!-- COMMIT: "
+		off := strings.Index(html, commitString)
+		closingComment := strings.Index(html, " -->")
+		if closingComment > 0 {
+			log.WithFields(log.Fields{
+				"start":  off + len(commitString),
+				"end":    closingComment,
+				"string": html[off+len(commitString) : closingComment],
+			}).Debug("match")
+			return html[off+len(commitString) : closingComment], nil
 		}
 	}
 	return "Unknown", nil
