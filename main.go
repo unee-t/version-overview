@@ -1,9 +1,13 @@
 package main
 
 import (
+	"bufio"
 	"html/template"
+	"io"
 	"net/http"
 	"os"
+	"regexp"
+	"strings"
 
 	"github.com/apex/log"
 	jsonhandler "github.com/apex/log/handlers/json"
@@ -11,9 +15,10 @@ import (
 )
 
 var views = template.Must(template.ParseGlob("templates/*.html"))
+var commitRE = regexp.MustCompile(`<!-- COMMIT: (?P<version>\w+) -->`)
 
 type Service struct {
-	Stage   string
+	Site    string
 	Version string
 }
 
@@ -28,15 +33,54 @@ func main() {
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	serviceInfo := []Service{
-		Service{Stage: "foobar", Version: "123"},
+	mefeVersions, err := getCOMMIT([]Service{
+		{Site: "https://case.dev.unee-t.com"},
+		{Site: "https://case.demo.unee-t.com"},
+		{Site: "https://case.unee-t.com"},
+	})
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
-	err := views.ExecuteTemplate(w, "index.html", struct {
+	err = views.ExecuteTemplate(w, "index.html", struct {
 		Frontend []Service
 	}{
-		serviceInfo,
+		mefeVersions,
 	})
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
+}
+
+func getCOMMIT(check []Service) (version []Service, err error) {
+	for i, v := range check {
+		log.WithField("site", v).Info("getting version")
+		resp, err := http.Get(v.Site)
+		if err != nil {
+			return check, err
+		}
+		defer resp.Body.Close()
+		check[i].Version, err = versionString(resp.Body)
+		if err != nil {
+			return check, err
+		}
+	}
+	return check, nil
+}
+
+func versionString(input io.Reader) (version string, err error) {
+	// <!-- COMMIT: ae5b321 -->
+	scanner := bufio.NewScanner(input)
+	for scanner.Scan() {
+		txt := scanner.Text()
+		if commitRE.MatchString(txt) {
+			words := strings.Split(strings.TrimSpace(txt), " ")
+			if len(words) > 3 {
+				return words[2], nil
+			}
+		}
+	}
+	return "foo", nil
 }

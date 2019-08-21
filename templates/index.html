@@ -4,7 +4,7 @@
 
 <ul>
 {{ range .Frontend }}
-<li>{{ .Stage }} {{ .Version }}</li>
+<li><a href="{{ .Site }}">{{ .Site }}</a> {{ .Version }}</li>
 {{ end }}
 </ul>
 

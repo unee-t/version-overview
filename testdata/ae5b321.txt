@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" class="__meteor-css__" href="/e742d08939475a13a050df9eeaffbd7aee037eff.css?meteor_css_resource=true">
+<title>Unee-T</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://media.dev.unee-t.com/2018-10-12/twitter-card.jpg">
+  <meta name="twitter:title" content="Smarter Unit Management">
+  <meta name="twitter:description" content="Capture and collaborate on property cases or create inspection reports">
+  <meta name="twitter:site" content="@uneetapp">
+  <link rel="canonical" href="https://case.unee-t.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
+  <meta name="description" content="Login to capture and collaborate on issues or create inspection reports for your properties">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+    crossorigin="anonymous">
+  <link href="/roboto-font.css" rel="stylesheet">
+  <!-- COMMIT: ae5b321 -->
+  <link rel="shortcut icon" href="https://media.unee-t.com/2018-10-01/favicon.ico">
+  <link rel="icon" href="https://media.unee-t.com/2018-10-01/cropped-favicon-32x32.png" sizes="32x32">
+  <link rel="icon" href="https://media.unee-t.com/2018-10-01/cropped-favicon-192x192.png" sizes="192x192">
+  <link rel="apple-touch-icon-precomposed" href="https://media.unee-t.com/2018-10-01/cropped-favicon-180x180.png">
+  <meta name="msapplication-TileImage" content="https://media.unee-t.com/2018-10-01/cropped-favicon-270x270.png">
+  <!-- Google Analytics -->
+  <script>
+    window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) }; ga.l = +new Date;
+    ga('create', 'UA-100139142-5', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  <!-- End Google Analytics -->
+
+</head>
+<body>
+  <script type="text/javascript">__meteor_runtime_config__ = JSON.parse(decodeURIComponent("%7B%22meteorRelease%22%3A%22METEOR%401.8.0.1%22%2C%22meteorEnv%22%3A%7B%22NODE_ENV%22%3A%22production%22%2C%22TEST_METADATA%22%3A%22%7B%7D%22%7D%2C%22PUBLIC_SETTINGS%22%3A%7B%22CLOUDINARY_URL%22%3A%22https%3A%2F%2Fapi.cloudinary.com%2Fv1_1%2Funee-t-staging%2Fimage%2Fupload%22%2C%22CLOUDINARY_PRESET%22%3A%22uqewstd8%22%7D%2C%22ROOT_URL%22%3A%22https%3A%2F%2Fcase.dev.unee-t.com%22%2C%22ROOT_URL_PATH_PREFIX%22%3A%22%22%2C%22autoupdate%22%3A%7B%22versions%22%3A%7B%22web.browser%22%3A%7B%22version%22%3A%220afe4de699fd9b9012c137444fe5e723166cd294%22%2C%22versionRefreshable%22%3A%22f1f15d0be5a9604ed14a9d826789870d867a534d%22%2C%22versionNonRefreshable%22%3A%2262ef5f46d693aa848728d13adf8db658a3e36f6d%22%7D%2C%22web.browser.legacy%22%3A%7B%22version%22%3A%22086a32fd7f8efd2b88934e06c2b134bb30055dfe%22%2C%22versionRefreshable%22%3A%22f1f15d0be5a9604ed14a9d826789870d867a534d%22%2C%22versionNonRefreshable%22%3A%229696c28999849914aee7ad1c54cf20869ded3343%22%7D%7D%2C%22autoupdateVersion%22%3Anull%2C%22autoupdateVersionRefreshable%22%3Anull%2C%22autoupdateVersionCordova%22%3Anull%2C%22appId%22%3A%221y3bhp61gp5hv61cnd7i3%22%7D%2C%22appId%22%3A%221y3bhp61gp5hv61cnd7i3%22%2C%22accountsConfigCalled%22%3Atrue%2C%22isModern%22%3Afalse%7D"))</script>
+
+  <script type="text/javascript" src="/fb81182593a1b6c8577d682f822fdc80f5489cc9.js?meteor_js_resource=true"></script>
+
+
+</body>
+</html>
