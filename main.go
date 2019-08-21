@@ -38,7 +38,6 @@ func index(w http.ResponseWriter, r *http.Request) {
 		{Site: "https://case.demo.unee-t.com"},
 		{Site: "https://case.unee-t.com"},
 	})
-
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -62,7 +61,7 @@ func getCOMMIT(check []Service) (version []Service, err error) {
 			return check, err
 		}
 		defer resp.Body.Close()
-		check[i].Version, err = versionString(resp.Body)
+		check[i].Version, err = commitVersion(resp.Body)
 		if err != nil {
 			return check, err
 		}
@@ -70,17 +69,20 @@ func getCOMMIT(check []Service) (version []Service, err error) {
 	return check, nil
 }
 
-func versionString(input io.Reader) (version string, err error) {
+func commitVersion(input io.Reader) (version string, err error) {
+	// Version string is actually a commit id, e.g. "ae5b321" from:
 	// <!-- COMMIT: ae5b321 -->
 	scanner := bufio.NewScanner(input)
 	for scanner.Scan() {
 		txt := scanner.Text()
 		if commitRE.MatchString(txt) {
+			// not sure howto use regex groups or if it's worth it
+			// https://regex101.com/r/57q2CW/2
 			words := strings.Split(strings.TrimSpace(txt), " ")
 			if len(words) > 3 {
 				return words[2], nil
 			}
 		}
 	}
-	return "foo", nil
+	return "Unknown", nil
 }
