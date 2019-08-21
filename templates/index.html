@@ -1,0 +1,11 @@
+{{template "header"}}
+
+<h1>Frontend</h1>
+
+<ul>
+{{ range .Frontend }}
+<li>{{ .Stage }} {{ .Version }}</li>
+{{ end }}
+</ul>
+
+{{template "footer"}}
