@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"io"
 	"os"
+	"strings"
 	"testing"
 )
 
@@ -41,10 +42,18 @@ func Test_versionString(t *testing.T) {
 			wantVersion: "foo",
 			wantErr:     false,
 		},
+		{
+			name: "edge",
+			args: args{
+				input: strings.NewReader(`<!-- --> <!-- COMMIT: 8f0c86e5cdb1fe342912b4975556eb86a6536234 -->`),
+			},
+			wantVersion: "8f0c86e5cdb1fe342912b4975556eb86a6536234",
+			wantErr:     false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotVersion, err := commitVersion(tt.args.input)
+			gotVersion, err := parseCommitComment(tt.args.input)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("versionString() error = %v, wantErr %v", err, tt.wantErr)
 				return

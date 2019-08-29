@@ -1,11 +1,21 @@
 {{template "header"}}
 
-<h1>Frontend</h1>
+<h1>Meteor</h1>
 
 <ul>
 {{ range .Frontend }}
 <li><a href="{{ .Site }}">{{ .Site }}</a> {{ .Version }}</li>
 {{ end }}
 </ul>
+
+<h1>Bugzilla</h1>
+
+<ul>
+{{ range .Bugzilla }}
+<li><a href="{{ .Site }}">{{ .Site }}</a> {{ .Version }}</li>
+{{ end }}
+</ul>
+
+
 
 {{template "footer"}}
