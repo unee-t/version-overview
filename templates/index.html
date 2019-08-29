@@ -4,18 +4,39 @@
 
 <ul>
 {{ range .Frontend }}
-<li><a href="{{ .Site }}">{{ .Site }}</a> {{ .Version }}</li>
-{{ end }}
+<li><a href="{{ .Site }}">{{ .Site }}</a> 
+{{ if .Version }}
+<a href="https://github.com/unee-t/frontend/commit/{{ .Version }}">
+{{ if not (isCurrent "https://github.com/unee-t/frontend" .Version) -}}
+NOT CURRENT {{ .Version }}</a>
+{{- else }}
+{{ .Version }}</a>
+{{- end }}
+{{- else }}
+DANGER NO VERSION FOUND
+{{- end }}
+</li>
+{{- end }}
 </ul>
 
 <h1>Bugzilla</h1>
 
 <ul>
 {{ range .Bugzilla }}
-<li><a href="{{ .Site }}">{{ .Site }}</a> {{ .Version }}</li>
-{{ end }}
+<li><a href="{{ .Site }}">{{ .Site }}</a> 
+{{ if .Version }}
+<a href="https://github.com/unee-t/bugzilla-customisation/commit/{{ .Version }}">
+{{ if not (isCurrent "https://github.com/unee-t/bugzilla-customisation" .Version) -}}
+NOT CURRENT {{ .Version }}</a>
+{{- else }}
+{{ .Version }}</a>
+{{- end }}
+{{- else }}
+DANGER NO VERSION FOUND
+{{- end }}
+</li>
+{{- end }}
 </ul>
-
 
 
 {{template "footer"}}

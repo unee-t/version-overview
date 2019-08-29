@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"html/template"
 	"io"
 	"net/http"
@@ -11,9 +12,16 @@ import (
 	"github.com/apex/log"
 	jsonhandler "github.com/apex/log/handlers/json"
 	"github.com/gorilla/mux"
+	"gopkg.in/src-d/go-git.v4"
+	"gopkg.in/src-d/go-git.v4/config"
+	"gopkg.in/src-d/go-git.v4/storage/memory"
 )
 
-var views = template.Must(template.ParseGlob("templates/*.html"))
+var views = template.Must(template.New("").
+	Funcs(template.FuncMap{"isCurrent": isCurrent}).
+	ParseGlob("templates/*.html"))
+
+var latest = map[string]string{}
 
 type Service struct {
 	Site    string
@@ -111,7 +119,7 @@ func parseHTMLspan(input io.Reader) (version string, err error) {
 			}
 		}
 	}
-	return "Unknown", nil
+	return "", nil
 }
 
 func parseCommitComment(input io.Reader) (version string, err error) {
@@ -132,9 +140,36 @@ func parseCommitComment(input io.Reader) (version string, err error) {
 					"start": off,
 					"end":   off + closingComment,
 				}).Debug("match")
-				return html[off+len(commitString) : off+closingComment], nil
+				match := html[off+len(commitString) : off+closingComment]
+				log.WithField("match", match).Debug("found")
+				return strings.Split(match, " ")[0], nil
 			}
 		}
 	}
-	return "Unknown", nil
+	return "", nil
+}
+
+func isCurrent(url string, hash string) bool {
+	if latest[url] == "" {
+		remote := git.NewRemote(memory.NewStorage(), &config.RemoteConfig{
+			URLs: []string{url},
+		})
+		log.WithField("url", url).Info("listing")
+		refs, err := remote.List(&git.ListOptions{})
+		if err != nil {
+			log.WithError(err).WithField("url", url).Error("not a git repo")
+			return false
+		}
+		for _, r := range refs {
+			if r.Name() == "refs/heads/master" {
+				latest[url] = fmt.Sprintf("%s", r.Hash())
+			}
+		}
+	} else {
+		log.WithField("url", url).Info("known")
+	}
+	if strings.HasPrefix(latest[url], hash) {
+		return true
+	}
+	return false
 }

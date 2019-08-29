@@ -31,7 +31,7 @@ func Test_versionString(t *testing.T) {
 			args: args{
 				input: bufio.NewReader(ae5b321),
 			},
-			wantVersion: "ae5b321",
+			wantVersion: "a83551366ab74bf43ce8c6019b94c5329d81eaf1",
 			wantErr:     false,
 		},
 		{
