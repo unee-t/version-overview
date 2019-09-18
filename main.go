@@ -109,16 +109,23 @@ func parseVersion(input io.Reader, in, out string) (version string, err error) {
 		html := scanner.Text()
 		off := strings.Index(html, in)
 		log.WithFields(log.Fields{
+			"in":    in,
 			"start": off,
 		}).Info("first")
 		if off >= 0 {
 			closingComment := strings.Index(html[off:], out)
 			if closingComment > 0 {
+				start := off + len(in)
+				end := off + closingComment
 				log.WithFields(log.Fields{
-					"start": off,
-					"end":   off + closingComment,
+					"off":   off,
+					"start": start,
+					"end":   end,
 				}).Info("match")
-				match := html[off+len(in) : off+closingComment]
+				if start >= end {
+					return "", nil
+				}
+				match := html[start:end]
 				log.WithField("match", match).Info("found")
 				return strings.Split(match, " ")[0], nil
 			}

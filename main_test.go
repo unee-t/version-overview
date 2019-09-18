@@ -50,6 +50,22 @@ func Test_versionString(t *testing.T) {
 			wantVersion: "8f0c86e5cdb1fe342912b4975556eb86a6536234",
 			wantErr:     false,
 		},
+		{
+			name: "outofrange",
+			args: args{
+				input: strings.NewReader(`<!-- COMMIT: -->`),
+			},
+			wantVersion: "",
+			wantErr:     false,
+		},
+		{
+			name: "empty",
+			args: args{
+				input: strings.NewReader(`<!-- COMMIT:-->`),
+			},
+			wantVersion: "",
+			wantErr:     false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
