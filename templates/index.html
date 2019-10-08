@@ -7,7 +7,7 @@
 <li><a href="{{ .Site }}">{{ .Site }}</a> 
 {{ if .Version }}
 <a href="https://github.com/unee-t/frontend/commit/{{ .Version }}">
-<span {{ if not (isCurrent "https://github.com/unee-t/frontend" .Version) -}} class="outdated" {{- end }}>
+<span {{ if not (isCurrent "https://github.com/unee-t/frontend" "master" .Version) -}} class="outdated" {{- end }}>
 {{ .Version }}</span></a>
 {{- else }}
 NO VERSION FOUND
@@ -24,8 +24,8 @@ NO VERSION FOUND
 {{ range .Bugzilla }}
 <li><a href="{{ .Site }}">{{ .Site }}</a> 
 {{ if .Version }}
-<a href="https://github.com/unee-t/bugzilla-customisation/commit/{{ .Version }}">
-<span {{ if not (isCurrent "https://github.com/unee-t/bugzilla-customisation" .Version) -}} class="outdated" {{- end }}>
+<a href="https://github.com/bugzilla/bugzilla/commits/{{ .Version }}">
+<span {{ if not (isCurrent "https://github.com/bugzilla/bugzilla.git" "5.2" .Version) -}} class="outdated" {{- end }}>
 {{ .Version }}</span></a>
 {{- else }}
 NO VERSION FOUND

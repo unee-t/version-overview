@@ -54,7 +54,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	// dash, aka https://github.com/unee-t/frontend/ aka Bugzilla
+	// dash, aka https://github.com/unee-t/bugzilla-customisation/ aka Bugzilla
 	dashVersions, err := getVersion([]Service{
 		{Site: "https://dashboard.dev.unee-t.com"},
 		{Site: "https://dashboard.demo.unee-t.com"},
@@ -134,7 +134,7 @@ func parseVersion(input io.Reader, in, out string) (version string, err error) {
 	return "", nil
 }
 
-func isCurrent(url string, hash string) bool {
+func isCurrent(url, branch, hash string) bool {
 	if latest[url] == "" {
 		remote := git.NewRemote(memory.NewStorage(), &config.RemoteConfig{
 			URLs: []string{url},
@@ -146,13 +146,18 @@ func isCurrent(url string, hash string) bool {
 			return false
 		}
 		for _, r := range refs {
-			if r.Name() == "refs/heads/master" {
+			log.WithField("branch", r.Name()).Info("ref")
+			if r.Name().String() == "refs/heads/"+strings.TrimSpace(branch) {
 				latest[url] = fmt.Sprintf("%s", r.Hash())
 			}
 		}
 	} else {
 		log.WithField("url", url).Info("known")
 	}
+	log.WithFields(log.Fields{
+		"url":  url,
+		"hash": latest[url],
+	}).Info("heads")
 	if strings.HasPrefix(latest[url], hash) {
 		return true
 	}
